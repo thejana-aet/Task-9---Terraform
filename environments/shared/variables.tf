@@ -191,7 +191,12 @@ variable "pritunl_vm_name" {
 
 variable "pritunl_vm_size" {
   type    = string
-  default = "Standard_B1s"
+  default = "Standard_B2s"
+}
+
+variable "os_disk_size_gb" {
+  type    = number
+  default = 30
 }
 
 variable "admin_username" {

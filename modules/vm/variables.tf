@@ -15,6 +15,11 @@ variable "vm_size" {
   default = "Standard_B2s"
 }
 
+variable "os_disk_size_gb" {
+  type    = number
+  default = 30
+}
+
 variable "admin_username" {
   type    = string
   default = "azureuser"

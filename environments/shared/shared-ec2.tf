@@ -8,6 +8,7 @@ module "jenkins" {
   admin_username      = var.admin_username
   ssh_public_key      = var.ssh_public_key
   subnet_id           = module.vnet.private_subnet_ids[0]
+  os_disk_size_gb = var.os_disk_size_gb
   associate_public_ip = false
   user_data           = file("${path.module}/user-data/jenkins-userdata.sh")
 }
@@ -22,6 +23,7 @@ module "pritunl" {
   admin_username      = var.admin_username
   ssh_public_key      = var.ssh_public_key
   subnet_id           = module.vnet.public_subnet_ids[0]
+  os_disk_size_gb = var.os_disk_size_gb
   associate_public_ip = true
   user_data           = file("${path.module}/user-data/pritunl-userdata.sh")  
   

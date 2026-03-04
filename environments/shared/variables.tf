@@ -69,7 +69,7 @@ variable "public_nsg_rules" {
       access                     = "Allow"
       protocol                   = "Udp"
       source_port_range          = "*"
-      destination_port_range     = "18912"
+      destination_port_range     = "18857"
       source_address_prefix      = "*"
       destination_address_prefix = "*"
     },

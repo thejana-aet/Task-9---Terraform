@@ -4,5 +4,5 @@ module "nat_gateway" {
   name                = "shared-nat-gateway"
   location            = data.azurerm_resource_group.shared.location
   resource_group_name = data.azurerm_resource_group.shared.name
-  subnet_id           = module.vnet.public_subnet_ids[0]
+  subnet_id           = module.vnet.private_subnet_ids[0]
 }

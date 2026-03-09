@@ -1,5 +1,5 @@
-module "vnet_peering" {
-  source = "../../modules/vnet_peering"
+module "vnet-peering" {
+  source = "../../modules/vnet-peering"
 
   vnet_1_name           = module.vnet.vnet_name
   vnet_1_id             = module.vnet.vnet_id

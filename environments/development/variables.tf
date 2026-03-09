@@ -179,7 +179,7 @@ variable "private_nsg_rules" {
 
 variable "acr_name" {
   type    = string
-  default = "task9-development-acr"
+  default = "task9developmentacr"
 }
 
 variable "acr_sku" {

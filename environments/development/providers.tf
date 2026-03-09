@@ -7,7 +7,7 @@ terraform {
   }
 
    backend "azurerm" {
-    resource_group_name  = "Task9-Thejana-Dev-RG"
+    resource_group_name  = "Task9-Thejana-Development-RG"
     storage_account_name = "task9devstate"
     container_name       = "tfstate"
     key                  = "development.terraform.tfstate"

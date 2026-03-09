@@ -59,6 +59,10 @@ variable "container_name" {
   default = "helloworld"
 }
 
+variable "os_disk_size_gb" {
+  type    = number
+}
+
 variable "tags" {
   type    = map(string)
   default = {}

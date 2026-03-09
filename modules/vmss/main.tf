@@ -13,14 +13,15 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
     version   = "latest"
   }
 
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
+    disk_size_gb         = var.os_disk_size_gb
   }
 
   network_interface {
@@ -28,9 +29,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     primary = true
 
     ip_configuration {
-      name                                   = "ipconfig"
-      primary                                = true
-      subnet_id                              = var.subnet_id
+      name                                         = "ipconfig"
+      primary                                      = true
+      subnet_id                                    = var.subnet_id
       application_gateway_backend_address_pool_ids = [var.backend_pool_id]
     }
   }
@@ -49,5 +50,5 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   upgrade_mode = "Manual"
 
-  #tags = var.tags
+  tags = var.tags
 }

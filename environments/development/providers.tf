@@ -5,6 +5,13 @@ terraform {
       version = "=4.1.0"
     }
   }
+
+   backend "azurerm" {
+    resource_group_name  = "Task9-Thejana-Dev-RG"
+    storage_account_name = "task9devstate"
+    container_name       = "tfstate"
+    key                  = "development.terraform.tfstate"
+  }
 }
 
 # Configure the Microsoft Azure Provider

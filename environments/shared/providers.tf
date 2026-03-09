@@ -5,6 +5,12 @@ terraform {
       version = "=4.1.0"
     }
   }
+    backend "azurerm" {
+      resource_group_name  = "Task9-Thejana-Shared-RG"
+      storage_account_name = "task9sharedstate"
+      container_name       = "tfstate"
+      key                  = "shared.terraform.tfstate"
+    }
 }
 
 # Configure the Microsoft Azure Provider

@@ -30,18 +30,19 @@ output "private_nsg_ids" {
   value = azurerm_network_security_group.private[*].id
 }
 
-output "public_pip_ids" {
-  value = azurerm_public_ip.public[*].id
-}
-
-output "public_pip_addresses" {
-  value = azurerm_public_ip.public[*].ip_address
-}
-
 output "public_nic_ids" {
   value = azurerm_network_interface.public[*].id
 }
 
 output "private_nic_ids" {
   value = azurerm_network_interface.private[*].id
+}
+
+
+output "appgw_subnet_id" {
+  value = var.appgw_subnet != null ? azurerm_subnet.appgw[0].id : null
+}
+
+output "public_pip_addresses" {
+  value = azurerm_public_ip.public[*].ip_address
 }

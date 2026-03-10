@@ -7,6 +7,9 @@ resource "azurerm_virtual_network" "vnet" {
   tags = var.tags
 }
 
+
+
+# Public Subnets
 resource "azurerm_subnet" "public" {
   count                = length(var.public_subnets)
   name                 = var.public_subnets[count.index].name
@@ -15,6 +18,7 @@ resource "azurerm_subnet" "public" {
   address_prefixes     = [var.public_subnets[count.index].cidr]
 }
 
+# Private Subnets
 resource "azurerm_subnet" "private" {
   count                = length(var.private_subnets)
   name                 = var.private_subnets[count.index].name
@@ -23,17 +27,16 @@ resource "azurerm_subnet" "private" {
   address_prefixes     = [var.private_subnets[count.index].cidr]
 }
 
-# Public IPs for public subnet NICs
-resource "azurerm_public_ip" "public" {
-  count               = length(var.public_subnets)
-  name                = "${var.public_subnets[count.index].name}-pip"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  allocation_method   = "Static"
-  sku                 = "Standard"
-
-  tags = var.tags
+# App Gateway dedicated subnet - optional
+resource "azurerm_subnet" "appgw" {
+  count                = var.appgw_subnet != null ? 1 : 0
+  name                 = var.appgw_subnet.name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [var.appgw_subnet.cidr]
 }
+
+
 
 # NSG for public subnets
 resource "azurerm_network_security_group" "public" {
@@ -85,6 +88,33 @@ resource "azurerm_network_security_group" "private" {
   tags = var.tags
 }
 
+# NSG for App Gateway subnet
+resource "azurerm_network_security_group" "appgw" {
+  count               = var.appgw_subnet != null ? 1 : 0
+  name                = "${var.appgw_subnet.name}-nsg"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  dynamic "security_rule" {
+    for_each = var.appgw_nsg_rules
+    content {
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      access                     = security_rule.value.access
+      protocol                   = security_rule.value.protocol
+      source_port_range          = security_rule.value.source_port_range
+      destination_port_range     = security_rule.value.destination_port_range
+      source_address_prefix      = security_rule.value.source_address_prefix
+      destination_address_prefix = security_rule.value.destination_address_prefix
+    }
+  }
+
+  tags = var.tags
+}
+
+
+
 # Public subnet NSG associations
 resource "azurerm_subnet_network_security_group_association" "public" {
   count                     = length(var.public_subnets)
@@ -99,9 +129,28 @@ resource "azurerm_subnet_network_security_group_association" "private" {
   network_security_group_id = azurerm_network_security_group.private[count.index].id
 }
 
-# Network interfaces for public subnets
+# App Gateway subnet NSG association
+resource "azurerm_subnet_network_security_group_association" "appgw" {
+  count                     = var.appgw_subnet != null ? 1 : 0
+  subnet_id                 = azurerm_subnet.appgw[0].id
+  network_security_group_id = azurerm_network_security_group.appgw[0].id
+}
+
+# Public IPs - only when create_public_nics is true
+resource "azurerm_public_ip" "public" {
+  count               = var.create_public_nics ? length(var.public_subnets) : 0
+  name                = "${var.public_subnets[count.index].name}-pip"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+
+  tags = var.tags
+}
+
+# NICs for public subnets - only when create_public_nics is true
 resource "azurerm_network_interface" "public" {
-  count               = length(var.public_subnets)
+  count               = var.create_public_nics ? length(var.public_subnets) : 0
   name                = "${var.public_subnets[count.index].name}-nic"
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -116,7 +165,7 @@ resource "azurerm_network_interface" "public" {
   tags = var.tags
 }
 
-# Network interfaces for private subnets
+# NICs for private subnets
 resource "azurerm_network_interface" "private" {
   count               = length(var.private_subnets)
   name                = "${var.private_subnets[count.index].name}-nic"

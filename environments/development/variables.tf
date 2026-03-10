@@ -97,10 +97,10 @@ variable "public_nsg_rules" {
       priority                   = 120
       direction                  = "Inbound"
       access                     = "Allow"
-      protocol                   = "Tcp"
+      protocol                   = "*"
       source_port_range          = "*"
       destination_port_range     = "65200-65535"
-      source_address_prefix      = "GatewayManager"
+      source_address_prefix      = "*"
       destination_address_prefix = "*"
     },
     {
@@ -177,6 +177,89 @@ variable "private_nsg_rules" {
   ]
 }
 
+
+variable "appgw_subnet" {
+  type = object({
+    name = string
+    cidr = string
+  })
+  default = {
+    name = "Task9-Thejana-Development-appgw-subnet"
+    cidr = "10.1.0.0/24"
+  }
+}
+
+variable "appgw_nsg_rules" {
+  type = list(object({
+    name                       = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    protocol                   = string
+    source_port_range          = string
+    destination_port_range     = string
+    source_address_prefix      = string
+    destination_address_prefix = string
+  }))
+  default = [
+    {
+      name                       = "allow-http-inbound"
+      priority                   = 100
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "80"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "allow-https-inbound"
+      priority                   = 110
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "443"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "allow-gateway-manager"
+      priority                   = 120
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "65200-65535"
+      source_address_prefix      = "GatewayManager"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "allow-azure-load-balancer"
+      priority                   = 130
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_range     = "*"
+      source_address_prefix      = "AzureLoadBalancer"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "allow-all-outbound"
+      priority                   = 100
+      direction                  = "Outbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_range     = "*"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    }
+  ]
+}
+
 variable "acr_name" {
   type    = string
   default = "task9developmentacr"
@@ -224,7 +307,7 @@ variable "container_name" {
 
 variable "os_disk_size_gb" {
   type    = number
-  default = 20
+  default = 30
 }
 
 # variable "tags" {

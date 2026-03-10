@@ -9,6 +9,7 @@ module "vnet" {
   private_subnets     = var.private_subnets
   public_nsg_rules    = var.public_nsg_rules
   private_nsg_rules   = var.private_nsg_rules
+  create_public_nics  = true
 #   tags                = var.tags
 }
 

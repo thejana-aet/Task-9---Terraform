@@ -169,6 +169,32 @@ variable "private_nsg_rules" {
   ]
 }
 
+variable "appgw_subnet" {
+  type = object({
+    name = string
+    cidr = string
+  })
+  default = {
+    name = "shared-appgw-subnet"
+    cidr = "10.0.3.0/24"
+  }
+}
+
+variable "appgw_nsg_rules" {
+  type = list(object({
+    name                       = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    protocol                   = string
+    source_port_range          = string
+    destination_port_range     = string
+    source_address_prefix      = string
+    destination_address_prefix = string
+  }))
+  default = []
+}
+
 # variable "acr_name" {
 #   type    = string
 #   default = "myprojectacr"

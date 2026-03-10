@@ -19,7 +19,6 @@ variable "appgw_subnet" {
     name = string
     cidr = string
   })
-  default = null
 }
 
 variable "appgw_nsg_rules" {

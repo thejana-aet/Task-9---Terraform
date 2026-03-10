@@ -28,8 +28,8 @@ resource "azurerm_subnet" "private" {
 }
 
 # App Gateway dedicated subnet - optional
+# App Gateway dedicated subnet - always created
 resource "azurerm_subnet" "appgw" {
-  count                = var.appgw_subnet != null ? 1 : 0
   name                 = var.appgw_subnet.name
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
@@ -88,9 +88,7 @@ resource "azurerm_network_security_group" "private" {
   tags = var.tags
 }
 
-# NSG for App Gateway subnet
 resource "azurerm_network_security_group" "appgw" {
-  count               = var.appgw_subnet != null ? 1 : 0
   name                = "${var.appgw_subnet.name}-nsg"
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -131,9 +129,8 @@ resource "azurerm_subnet_network_security_group_association" "private" {
 
 # App Gateway subnet NSG association
 resource "azurerm_subnet_network_security_group_association" "appgw" {
-  count                     = var.appgw_subnet != null ? 1 : 0
-  subnet_id                 = azurerm_subnet.appgw[0].id
-  network_security_group_id = azurerm_network_security_group.appgw[0].id
+  subnet_id                 = azurerm_subnet.appgw.id
+  network_security_group_id = azurerm_network_security_group.appgw.id
 }
 
 # Public IPs - only when create_public_nics is true

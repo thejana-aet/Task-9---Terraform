@@ -6,6 +6,10 @@ output "vnet_name" {
   value = azurerm_virtual_network.vnet.name
 }
 
+output "appgw_subnet_id" {
+  value = azurerm_subnet.appgw.id
+}
+
 output "public_subnet_ids" {
   value = azurerm_subnet.public[*].id
 }
@@ -36,11 +40,6 @@ output "public_nic_ids" {
 
 output "private_nic_ids" {
   value = azurerm_network_interface.private[*].id
-}
-
-
-output "appgw_subnet_id" {
-  value = var.appgw_subnet != null ? azurerm_subnet.appgw[0].id : null
 }
 
 output "public_pip_addresses" {

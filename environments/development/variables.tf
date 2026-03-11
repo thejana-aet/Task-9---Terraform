@@ -138,7 +138,7 @@ variable "private_nsg_rules" {
       protocol                   = "Tcp"
       source_port_range          = "*"
       destination_port_range     = "80"
-      source_address_prefix      = "10.1.1.0/24"
+      source_address_prefix      = "10.1.0.0/16"
       destination_address_prefix = "*"
     },
     {

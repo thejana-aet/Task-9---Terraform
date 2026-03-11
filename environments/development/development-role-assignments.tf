@@ -7,7 +7,7 @@ resource "azurerm_role_assignment" "jenkins_acr_push_dev" {
 }
 
 resource "azurerm_role_assignment" "jenkins_vmss_dev" {
-  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
+  scope                = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${data.azurerm_resource_group.dev.name}"
   role_definition_name = "Virtual Machine Contributor"
   principal_id         = data.terraform_remote_state.shared.outputs.jenkins_principal_id
 }

@@ -297,12 +297,12 @@ variable "ssh_public_key" {
 
 variable "image_name" {
   type    = string
-  default = "Task9-Thejana-Development-helloworld"
+  default = "task9-html-app"
 }
 
 variable "container_name" {
   type    = string
-  default = "Task9-Thejana-Development-helloworld"
+  default = "helloworld"
 }
 
 variable "os_disk_size_gb" {

@@ -1,14 +1,14 @@
 module "jenkins" {
   source = "../../modules/vm"
 
-  vm_name             = var.jenkins_vm_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  vm_size             = var.jenkins_vm_size
-  admin_username      = var.admin_username
+  vm_name             = "Task9-Thejana-Shared-Jenkins-vm"
+  location            = data.azurerm_resource_group.shared.location
+  resource_group_name = data.azurerm_resource_group.shared.name
+  vm_size             = "Standard_B2s"
+  admin_username      = "azureuser"
   ssh_public_key      = var.ssh_public_key
   subnet_id           = module.vnet.private_subnet_ids[0]
-  os_disk_size_gb = var.os_disk_size_gb
+  os_disk_size_gb = 30
   associate_public_ip = false
   user_data           = file("${path.module}/user-data/jenkins-userdata.sh")
 }
@@ -16,14 +16,14 @@ module "jenkins" {
 module "pritunl" {
   source = "../../modules/vm"
 
-  vm_name             = var.pritunl_vm_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  vm_size             = var.pritunl_vm_size
-  admin_username      = var.admin_username
+  vm_name             = "Task9-Thejana-Shared-Pritunl-vm"
+  location            = data.azurerm_resource_group.shared.location
+  resource_group_name = data.azurerm_resource_group.shared.name
+  vm_size             = "Standard_B2s"
+  admin_username      = "azureuser"
   ssh_public_key      = var.ssh_public_key
   subnet_id           = module.vnet.public_subnet_ids[0]
-  os_disk_size_gb = var.os_disk_size_gb
+  os_disk_size_gb = 30
   associate_public_ip = true
   user_data           = file("${path.module}/user-data/pritunl-userdata.sh")  
   

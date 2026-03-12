@@ -1,6 +1,5 @@
 data "azurerm_resource_group" "shared" {
-  name = var.resource_group_name
-  
+  name = "Task9-Thejana-Shared-RG"
 }
 
 

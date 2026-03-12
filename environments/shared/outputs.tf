@@ -18,23 +18,6 @@ output "private_subnet_ids" {
   value = module.vnet.private_subnet_ids
 }
 
-# output "acr_id" {
-#   value = module.acr.acr_id
-# }
-
-# output "acr_login_server" {
-#   value = module.acr.login_server
-# }
-
-# output "acr_admin_username" {
-#   value = module.acr.admin_username
-# }
-
-# output "acr_admin_password" {
-#   value     = module.acr.admin_password
-#   sensitive = true
-# }
-
 output "jenkins_private_ip" {
   value = module.jenkins.private_ip
 }

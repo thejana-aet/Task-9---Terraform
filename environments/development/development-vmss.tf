@@ -1,7 +1,7 @@
 module "vmss" {
   source = "../../modules/vmss"
 
-  vmss_name           = "Task9-Thejana-Development-vmss"
+  vmss_name           = "Development-vmss"
   location            = data.azurerm_resource_group.dev.location
   resource_group_name = data.azurerm_resource_group.dev.name
   vm_size             = "Standard_B1s"
@@ -13,7 +13,7 @@ module "vmss" {
   acr_login_server    = module.acr.login_server
   acr_username        = module.acr.admin_username
   acr_password        = module.acr.admin_password
-  image_name          = "task9-html-app"
+  image_name          = "html-app"
   container_name      = "helloworld"
   os_disk_size_gb     = 30
   #tags                = var.tags

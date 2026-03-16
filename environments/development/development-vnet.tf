@@ -1,14 +1,14 @@
 module "vnet" {
   source = "../../modules/vnet"
 
-  vnet_name           = "Task9-Thejana-Development-vnet"
+  vnet_name           = "Development-vnet"
   location            = data.azurerm_resource_group.dev.location
   resource_group_name = data.azurerm_resource_group.dev.name
   address_space       = "10.1.0.0/16"
 
   
   appgw_subnet = {
-    name = "Task9-Thejana-Development-appgw-subnet"
+    name = "Development-appgw-subnet"
     cidr = "10.1.0.0/24"
   }
 
@@ -72,22 +72,22 @@ module "vnet" {
 
   public_subnets = [
     {
-      name = "Task9-Thejana-Development-public-Subnet-az1"
+      name = "Development-public-Subnet-az1"
       cidr = "10.1.1.0/24"
     },
     {
-      name = "Task9-Thejana-Development-public-Subnet-az2"
+      name = "Development-public-Subnet-az2"
       cidr = "10.1.3.0/24"
     }
   ]
 
   private_subnets = [
     {
-      name = "Task9-Thejana-Development-private-Subnet-az1"
+      name = "Development-private-Subnet-az1"
       cidr = "10.1.2.0/24"
     },
     {
-      name = "Task9-Thejana-Development-private-Subnet-az2"
+      name = "Development-private-Subnet-az2"
       cidr = "10.1.4.0/24"
     }
   ]

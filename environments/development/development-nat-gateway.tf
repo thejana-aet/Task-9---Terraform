@@ -1,7 +1,7 @@
 module "nat_gateway_az1" {
   source = "../../modules/nat-gateway"
 
-  name                = "Task9-Thejana-Development-Nat-Gateway-az1"
+  name                = "Development-Nat-Gateway-az1"
   location            = data.azurerm_resource_group.dev.location
   resource_group_name = data.azurerm_resource_group.dev.name
   subnet_id           = module.vnet.private_subnet_ids[0]
@@ -11,7 +11,7 @@ module "nat_gateway_az1" {
 module "nat_gateway_az2" {
   source = "../../modules/nat-gateway"
 
-  name                = "Task9-Thejana-Development-Nat-Gateway-az2"
+  name                = "Development-Nat-Gateway-az2"
   location            = data.azurerm_resource_group.dev.location
   resource_group_name = data.azurerm_resource_group.dev.name
   subnet_id           = module.vnet.private_subnet_ids[1]

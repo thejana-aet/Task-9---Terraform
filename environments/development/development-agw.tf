@@ -1,7 +1,7 @@
 module "app_gateway" {
   source = "../../modules/app-gateway"
 
-  name                = "Task9-Thejana-Development-App-Gateway"
+  name                = "Development-App-Gateway"
   location            = data.azurerm_resource_group.dev.location
   resource_group_name = data.azurerm_resource_group.dev.name
   subnet_id           = module.vnet.appgw_subnet_id
